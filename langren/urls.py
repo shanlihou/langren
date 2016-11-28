@@ -25,6 +25,6 @@ from view import langren, root, hello
 
 urlpatterns = [
     url(r'^langren/', langren),
-    url(r'^hello/', hello)#,
-    #url(r'^', root)
+    url(r'^hello/', hello),
+    url(r'^', root)
 ]
