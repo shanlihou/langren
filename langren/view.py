@@ -20,7 +20,7 @@ def root(request):
 	if (strRet == dictReq['signature']):
 		fileWrite = open('token.txt', 'w')
 		fileWrite.write(request.get_full_path())
-		return HttpResponse(strRet)
+		return HttpResponse(dictReq['echostr'])
 	return HttpResponse("Hello root ! ")
 
 def hello(request):
