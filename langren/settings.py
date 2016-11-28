@@ -27,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
 	'.free.natapp.cc',
-	'192.168.0.189'
+	'192.168.0.189',
+	'shanlihou.ngrok.cc'
 ]
 
 
