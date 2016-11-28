@@ -26,7 +26,8 @@ SECRET_KEY = '@v9ozrpp60vf&6jo%0vo7!v_7ij2vxv7i1hlz1wl+@^#yn05!t'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-	'.free.natapp.cc'
+	'.free.natapp.cc',
+	'192.168.0.189'
 ]
 
 
@@ -56,7 +57,7 @@ ROOT_URLCONF = 'langren.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR+"/templates",],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
