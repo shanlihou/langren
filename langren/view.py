@@ -1,9 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 import hashlib
 def langren(request):
 	return HttpResponse("Hello langren ! ")
 
+@csrf_exempt
 def root(request):
 	dictReq = request.GET
 	token = 'langren'
@@ -20,7 +22,8 @@ def root(request):
 	if (strRet == dictReq['signature']):
 		fileWrite = open('token.txt', 'w')
 		fileWrite.write(request.get_full_path())
-		return HttpResponse(dictReq['echostr'])
+		if ('echostr' in dictReq):
+			return HttpResponse(dictReq['echostr'])
 	return HttpResponse("Hello root ! ")
 
 def hello(request):

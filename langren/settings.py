@@ -70,7 +70,6 @@ TEMPLATES = [
         },
     },
 ]
-
 WSGI_APPLICATION = 'langren.wsgi.application'
 
 
