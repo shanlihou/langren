@@ -1,13 +1,13 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from xml.dom.minidom import parse
+import xml.dom.minidom
 import hashlib
 def langren(request):
 	return HttpResponse("Hello langren ! ")
 
-@csrf_exempt
-def root(request):
-	dictReq = request.GET
+def checkAuth(dictReq):
 	token = 'langren'
 	arr = []
 	arr.append(token)
@@ -18,12 +18,42 @@ def root(request):
 	sha1 = hashlib.sha1()
 	sha1.update(strHash)
 	strRet = sha1.hexdigest()
-	print strRet
-	if (strRet == dictReq['signature']):
-		fileWrite = open('token.txt', 'w')
-		fileWrite.write(request.get_full_path())
-		if ('echostr' in dictReq):
-			return HttpResponse(dictReq['echostr'])
+	if strRet == dictReq['signature']:
+		return True
+	else:
+		return False
+@csrf_exempt
+def root(request):
+	dictReq = request.GET
+	if (not checkAuth(dictReq)):
+		print 'auth failed'
+		return False
+	print request
+	fileWrite = open('token.txt', 'w')
+	fileWrite.write(request.get_full_path())
+	if ('echostr' in dictReq):
+		return HttpResponse(dictReq['echostr'])
+	if request.method == 'POST':	
+		print request.FILES
+		strRead = request.read()
+		print strRead
+		fileWrite = open('post.xml', 'w')
+		fileWrite.write(strRead)
+		fileWrite.close()
+		DOMTree = xml.dom.minidom.parse("post.xml")
+		collection = DOMTree.documentElement
+		ret = "<xml>"	
+		ret = ret + "<ToUserName><![CDATA[" + dictReq["openid"] + "]]></ToUserName>"
+		ret = ret + "<FromUserName><![CDATA[geyeguojiang]]></FromUserName>"
+		ret = ret + "<CreateTime>12345678</CreateTime>"
+		ret = ret + "<MsgType><![CDATA[text]]></MsgType>"
+		ret = ret + "<Content><![CDATA[hello]]></Content>"
+		ret = ret + "</xml>"
+		return HttpResponse(ret)
+	if (request.FILES):
+		print 'in'
+		xmlContent = request.FILES['content']
+		print xmlContent
 	return HttpResponse("Hello root ! ")
 
 def hello(request):

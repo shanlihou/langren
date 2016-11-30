@@ -4,3 +4,6 @@
 .pydevproject
 sunny
 token.txt
+*.txt
+*.pcap
+*.xml
