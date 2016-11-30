@@ -43,9 +43,12 @@ def root(request):
 		fileWrite.close()
 		DOMTree = xml.dom.minidom.parse("post.xml")
 		collection = DOMTree.documentElement
+		fromUser = collection.getElementsByTagName("ToUserName")[0]
+		print fromUser.childNodes[0].data
+		print fromUser
 		ret = "<xml>"	
 		ret = ret + "<ToUserName><![CDATA[" + dictReq["openid"] + "]]></ToUserName>"
-		ret = ret + "<FromUserName><![CDATA[geyeguojiang]]></FromUserName>"
+		ret = ret + "<FromUserName><![CDATA["+ fromUser.childNodes[0].data + "]]></FromUserName>"
 		strTime = str(int(time.time()))
 		print strTime
 		ret = ret + "<CreateTime>" + strTime + "</CreateTime>"
