@@ -22,9 +22,11 @@ urlpatterns = [
 
 from django.conf.urls import url
 from view import langren, root, hello
+from TestModel.views import testdb
 
 urlpatterns = [
-    url(r'^langren/', langren),
-    url(r'^hello/', hello),
-    url(r'^', root)
+    url(r'^langren/$', langren),
+    url(r'^hello/$', hello),
+    url(r'^', root),
+    url('^testdb/$', testdb),
 ]
