@@ -52,25 +52,32 @@ class WXRequest(object):
                 print 'come here'
                 if (DBHelper.checkHas(self.recvMsg['toUser'], arg[1])):
                     print 'has this'
-                    self.resp = '你已经报名'
+                    self.resp = '省点力气吧，你已经报过名了，不信你查下'
                     return False
                 DBHelper.addUser(self.recvMsg['toUser'], arg[1])
                 num = DBHelper.getPpNum(arg[1])
-                self.resp = '报名' + str(num) + '人'
+                self.resp = '已经' + str(num) + '个人报名了，你还在犹豫啥？'
         elif arg[0] == 'cx':
             if arg[1].isdigit() and len(arg[1].decode("utf-8")) == 8:
                 num = DBHelper.getPpNum(arg[1])
-                self.resp = '报名' + str(num) + '人'
+                self.resp = '已经' + str(num) + '个人报名了，你还在犹豫啥？'
+        elif arg[0] == 'qx':
+            if arg[1].isdigit() and len(arg[1].decode("utf-8")) == 8:
+                if (DBHelper.deleteUser(self.recvMsg['toUser'], arg[1])):
+                    self.resp = '取消报名成功，就这么放弃了？'
+                else:
+                    self.resp = '别骗我了，你根本没报名'   
         return True
     def defaultResponse(self, strMsg):
         if (strMsg):
             return self.makeResponse(strMsg)
         if (self.resp):
             return self.makeResponse(self.resp)
-        strResp = ''
+        strResp = '这种话"' + self.recvMsg['Content'] + '"你都说得出口，你还是按下面操作来吧\n'
         strResp += '功能如下\n'
         strResp += '报名:bm date, (如:bm 20161207)\n'
-        strResp += '查询报名人数:cx date, (如:cx 20161207)'
+        strResp += '查询报名人数:cx date, (如:cx 20161207)\n'
+        strResp += '取消报名:qx date, (如:qx 20161207)\n'
         return self.makeResponse(strResp)
         
     def makeResponse(self, strMsg):
