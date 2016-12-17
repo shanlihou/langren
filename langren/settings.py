@@ -29,7 +29,8 @@ ALLOWED_HOSTS = [
 	'.free.natapp.cc',
 	'192.168.0.189',
 	'shanlihou.ngrok.cc',
-	'127.0.0.1'
+	'127.0.0.1',
+	'60.205.206.18'
 ]
 
 
