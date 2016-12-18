@@ -11,7 +11,7 @@ class Identy(models.Model):
     name = models.CharField(max_length=40)
     number = models.IntegerField()
     status = models.IntegerField()
-    identy = models.IntegerField()
+    identy = models.CharField(max_length=20)
 
 class Status(models.Model):
     name = models.CharField(max_length=20)
