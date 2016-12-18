@@ -62,7 +62,7 @@ class WXRequest(object):
         if (cmdFind):
             print cmdFind.group()   
             '''
-        arg =  strCmd.split()
+        arg =  strCmd.lower().split()
         if arg[0] == 'bm':
             print (type(arg[1]))
             if arg[1].isdigit() and len(arg[1].decode("utf-8")) == 8:
