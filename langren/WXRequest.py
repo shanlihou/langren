@@ -58,9 +58,18 @@ class WXRequest(object):
                 num = DBHelper.getPpNum(arg[1])
                 self.resp = '已经' + str(num) + '个人报名了，你还在犹豫啥？'
         elif arg[0] == 'cx':
-            if arg[1].isdigit() and len(arg[1].decode("utf-8")) == 8:
+            if len(arg) > 1 and arg[1].isdigit() and len(arg[1].decode("utf-8")) == 8:
                 num = DBHelper.getPpNum(arg[1])
                 self.resp = '已经' + str(num) + '个人报名了，你还在犹豫啥？'
+            else:
+                today = time.time()
+                respStr = ''
+                for i in range(7):
+                    strDate = time.strftime('%Y%m%d',time.localtime(today + i * 86400))
+                    num = DBHelper.getPpNum(strDate)
+                    respStr += strDate + ':' + str(num) + '人报名\n'
+                self.resp = respStr    
+                    
         elif arg[0] == 'qx':
             if arg[1].isdigit() and len(arg[1].decode("utf-8")) == 8:
                 if (DBHelper.deleteUser(self.recvMsg['toUser'], arg[1])):
@@ -77,6 +86,7 @@ class WXRequest(object):
         strResp += '功能如下\n'
         strResp += '报名:bm date, (如:bm 20161207)\n'
         strResp += '查询报名人数:cx date, (如:cx 20161207)\n'
+        strResp += '查询七天内报名情况:cx, (如:cx)\n'
         strResp += '取消报名:qx date, (如:qx 20161207)\n'
         return self.makeResponse(strResp)
         
