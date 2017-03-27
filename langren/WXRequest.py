@@ -66,8 +66,6 @@ class WXRequest(object):
             print cmdFind.group()   
             '''
         arg =  strCmd.lower().split()
-        print 'arg0:' + arg[0]
-        print 'arg1:' + arg[1]
         if arg[0] == 'bm':
             print (type(arg[1]))
             if arg[1].isdigit() and len(arg[1].decode("utf-8")) == 8:
@@ -177,7 +175,6 @@ class WXRequest(object):
             GAME.reset()
             self.resp = '操作成功'
         elif arg[0] == 'pc':
-            print 'enter pc'
             if arg[1] == 'open':
                 self.resp = PCControl.wantOpen()
             elif arg[1] == 'close':
