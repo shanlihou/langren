@@ -10,3 +10,4 @@ token.txt
 *.sql
 test
 .settings
+migrations

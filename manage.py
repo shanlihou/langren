@@ -2,6 +2,8 @@
 import os
 import sys
 
+for i in sys.argv:
+    print i
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "langren.settings")
     try:

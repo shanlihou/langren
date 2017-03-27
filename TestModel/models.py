@@ -16,3 +16,7 @@ class Identy(models.Model):
 class Status(models.Model):
     name = models.CharField(max_length=20)
     value = models.IntegerField()
+
+class PC(models.Model):
+    name = models.CharField(max_length=20)
+    value = models.IntegerField()

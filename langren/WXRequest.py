@@ -7,6 +7,7 @@ import time
 import re
 from DBHelper import DBHelper
 from game import GAME
+from PCControl import PCControl
 class WXRequest(object):
     def __init__(self):
         self.recvMsg = {}
@@ -29,6 +30,8 @@ class WXRequest(object):
 #        self.option += 'reset:重置游戏\n'
         print 'init'
     def checkAuth(self, dictReq):
+        if not dictReq.has_key("timestamp"):
+            return False
         token = 'langren'
         arr = []
         arr.append(token)
@@ -63,6 +66,8 @@ class WXRequest(object):
             print cmdFind.group()   
             '''
         arg =  strCmd.lower().split()
+        print 'arg0:' + arg[0]
+        print 'arg1:' + arg[1]
         if arg[0] == 'bm':
             print (type(arg[1]))
             if arg[1].isdigit() and len(arg[1].decode("utf-8")) == 8:
@@ -171,7 +176,16 @@ class WXRequest(object):
         elif arg[0] == 'reset':
             GAME.reset()
             self.resp = '操作成功'
-            
+        elif arg[0] == 'pc':
+            print 'enter pc'
+            if arg[1] == 'open':
+                self.resp = PCControl.wantOpen()
+            elif arg[1] == 'close':
+                self.resp = PCControl.wantClose()
+            elif arg[1] == 'isopen':
+                self.resp = str(PCControl.isPCOpen())
+            elif arg[1] == 'iswantopen':
+                self.resp = str(PCControl.isNeedClose())
         return True
     def defaultResponse(self, strMsg):
         if (strMsg):
